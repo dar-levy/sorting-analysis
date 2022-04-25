@@ -19,28 +19,28 @@ public class Sorting{
 	 *
 	 * @param arr - the array to be sorted
 	 */
-	public static void quickSort(double[] arr, int pivot, int lastIndex){
-		if (arr.length > 2){
-			int pivotIndex = partition(arr, pivot, arr.length);
-			quickSort(arr, pivot, pivotIndex-1);
+	public static void quickSort(double[] arr, int firstIndex, int lastIndex){
+		if (lastIndex-firstIndex >= 2){
+			int pivotIndex = partition(arr, firstIndex, lastIndex);
+			quickSort(arr, firstIndex, pivotIndex-1);
 			quickSort(arr, pivotIndex+1, lastIndex);
 		} else {
-			simpleSort(arr);
+			simpleSort(arr, firstIndex, lastIndex);
 		}
 	}
 
-	private static void simpleSort(double[] arr){
-		if (arr[0] > arr[1]){
-			double firstValue = arr[0];
-			arr[0] = arr[1];
-			arr[1] = firstValue;
+	private static void simpleSort(double[] arr, int firstIndex, int lastIndex){
+		if (arr[firstIndex] > arr[lastIndex]){
+			double firstValue = arr[firstIndex];
+			arr[firstIndex] = arr[lastIndex];
+			arr[lastIndex] = firstValue;
 		}
 	}
 
 	private static int partition(double[] arr, int startingIndex, int pivotIndex){
 		double pivotValue = arr[pivotIndex];
 		int left = startingIndex;
-		int right = pivotIndex;
+		int right = pivotIndex-1;
 		while(true){
 			while(true){
 				if (arr[right] < pivotValue || right < left) {break;};
@@ -119,13 +119,13 @@ public class Sorting{
 
     
 	public static void main(String[] args) {
-	
+		double[] arr = {3.0,1.0,4.0,2.0,6.0,7.0,5.0};
+		quickSort(arr, 0 , arr.length-1);
 		countingVsQuick();
 		mergeVsQuick();
 		mergeVsQuickOnSortedArray();
 		mergeVsBubble();
 		QuickSelectVsQuickSort();
-		
 	}
 	
 
@@ -147,7 +147,7 @@ public class Sorting{
 					a[j] = b[j];
 				}
 				startTime = System.currentTimeMillis();
-				quickSort(a);
+				quickSort(a, 0, a.length);
 				endTime = System.currentTimeMillis();
 				sumQuick += endTime - startTime;
 				startTime = System.currentTimeMillis();
@@ -184,7 +184,7 @@ public class Sorting{
 					b[j] = a[j];
 				}
 				startTime = System.currentTimeMillis();
-				quickSort(a);
+				quickSort(a,0, a.length);
 				endTime = System.currentTimeMillis();
 				sumQuick += endTime - startTime;
 				startTime = System.currentTimeMillis();
@@ -217,7 +217,7 @@ public class Sorting{
 					b[j] = j;
 				}
 				startTime = System.currentTimeMillis();
-				quickSort(a);
+				quickSort(a,0, a.length);
 				endTime = System.currentTimeMillis();
 				sumQuick += endTime - startTime;
 				startTime = System.currentTimeMillis();
@@ -288,7 +288,7 @@ public class Sorting{
 					b[j] = a[j];
 				}
 				startTime = System.currentTimeMillis();
-				quickSort(a);
+				quickSort(a,0, a.length);
 				endTime = System.currentTimeMillis();
 				sumQsort += endTime - startTime;
 				startTime = System.currentTimeMillis();
