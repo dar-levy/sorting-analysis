@@ -10,20 +10,60 @@ public class Sorting{
 	final static int BUBBLE_VS_MERGE_LENGTH = 12;
 	final static int MERGE_VS_QUICK_SORTED_LENGTH =11;
 	final static double T = 600.0;
-	
+
 	/**
 	 * Sorts a given array using the quick sort algorithm.
 	 * At each stage the pivot is chosen to be the rightmost element of the subarray.
-	 * 
+	 *
 	 * Should run in average complexity of O(nlog(n)), and worst case complexity of O(n^2)
-	 * 
+	 *
 	 * @param arr - the array to be sorted
 	 */
-	public static void quickSort(double[] arr){
-			// your code comes here
+	public static void quickSort(double[] arr, int pivot, int lastIndex){
+		if (arr.length > 2){
+			int pivotIndex = partition(arr, pivot, arr.length);
+			quickSort(arr, pivot, pivotIndex-1);
+			quickSort(arr, pivotIndex+1, lastIndex);
+		} else {
+			simpleSort(arr);
+		}
 	}
-	
 
+	private static void simpleSort(double[] arr){
+		if (arr[0] > arr[1]){
+			double firstValue = arr[0];
+			arr[0] = arr[1];
+			arr[1] = firstValue;
+		}
+	}
+
+	private static int partition(double[] arr, int startingIndex, int pivotIndex){
+		double pivotValue = arr[pivotIndex];
+		int left = startingIndex;
+		int right = pivotIndex;
+		while(true){
+			while(true){
+				if (arr[right] < pivotValue || right < left) {break;};
+				right -= 1;
+			}
+
+			while(true){
+				if (arr[left] >= pivotValue || left > pivotIndex) {break;};
+				left += 1;
+			}
+
+			if(left < right){
+				double leftValue = arr[left];
+				arr[left] = arr[right];
+				arr[right] = leftValue;
+			} else {
+				double lastRightIndexValue = arr[right + 1];
+				arr[pivotIndex] = lastRightIndexValue;
+				arr[right + 1] = pivotValue;
+				return (right + 1);
+			}
+		}
+	}
 
 	/**
 	 * Given an array arr and an index i returns the the i'th order statstics in arr. 
