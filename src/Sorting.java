@@ -10,20 +10,58 @@ public class Sorting{
 	final static int BUBBLE_VS_MERGE_LENGTH = 12;
 	final static int MERGE_VS_QUICK_SORTED_LENGTH =11;
 	final static double T = 600.0;
-	
+
 	/**
 	 * Sorts a given array using the quick sort algorithm.
 	 * At each stage the pivot is chosen to be the rightmost element of the subarray.
-	 * 
+	 *
 	 * Should run in average complexity of O(nlog(n)), and worst case complexity of O(n^2)
-	 * 
+	 *
 	 * @param arr - the array to be sorted
 	 */
-	public static void quickSort(double[] arr){
-			// your code comes here
+	public static void quickSort(double[] arr, int firstIndex, int lastIndex){
+		if (lastIndex-firstIndex >= 2){
+			int pivotIndex = partition(arr, firstIndex, lastIndex);
+			quickSort(arr, firstIndex, pivotIndex-1);
+			quickSort(arr, pivotIndex+1, lastIndex);
+		} else {
+			simpleSort(arr, firstIndex, lastIndex);
+		}
 	}
-	
 
+	private static void simpleSort(double[] arr, int firstIndex, int lastIndex){
+		if (arr[firstIndex] > arr[lastIndex]){
+			double firstValue = arr[firstIndex];
+			arr[firstIndex] = arr[lastIndex];
+			arr[lastIndex] = firstValue;
+		}
+	}
+
+	private static int partition(double[] arr, int startingIndex, int pivotIndex){
+		double pivotValue = arr[pivotIndex];
+		int left = startingIndex;
+		int right = pivotIndex-1;
+		while(true){
+			while (!(arr[right] < pivotValue) && right >= left) {
+				right -= 1;
+			}
+
+			while (!(arr[left] >= pivotValue) && left <= pivotIndex) {
+				left += 1;
+			}
+
+			if(left < right){
+				double leftValue = arr[left];
+				arr[left] = arr[right];
+				arr[right] = leftValue;
+			} else {
+				double lastRightIndexValue = arr[right + 1];
+				arr[pivotIndex] = lastRightIndexValue;
+				arr[right + 1] = pivotValue;
+				return (right + 1);
+			}
+		}
+	}
 
 	/**
 	 * Given an array arr and an index i returns the the i'th order statstics in arr. 
@@ -79,13 +117,13 @@ public class Sorting{
 
     
 	public static void main(String[] args) {
-	
+		double[] arr = {3.0,1.0,4.0,2.0,6.0,7.0,5.0};
+		quickSort(arr, 0 , arr.length-1);
 		countingVsQuick();
 		mergeVsQuick();
 		mergeVsQuickOnSortedArray();
 		mergeVsBubble();
 		QuickSelectVsQuickSort();
-		
 	}
 	
 
@@ -107,7 +145,7 @@ public class Sorting{
 					a[j] = b[j];
 				}
 				startTime = System.currentTimeMillis();
-				quickSort(a);
+				quickSort(a, 0, a.length);
 				endTime = System.currentTimeMillis();
 				sumQuick += endTime - startTime;
 				startTime = System.currentTimeMillis();
@@ -144,7 +182,7 @@ public class Sorting{
 					b[j] = a[j];
 				}
 				startTime = System.currentTimeMillis();
-				quickSort(a);
+				quickSort(a,0, a.length);
 				endTime = System.currentTimeMillis();
 				sumQuick += endTime - startTime;
 				startTime = System.currentTimeMillis();
@@ -177,7 +215,7 @@ public class Sorting{
 					b[j] = j;
 				}
 				startTime = System.currentTimeMillis();
-				quickSort(a);
+				quickSort(a,0, a.length);
 				endTime = System.currentTimeMillis();
 				sumQuick += endTime - startTime;
 				startTime = System.currentTimeMillis();
@@ -248,7 +286,7 @@ public class Sorting{
 					b[j] = a[j];
 				}
 				startTime = System.currentTimeMillis();
-				quickSort(a);
+				quickSort(a,0, a.length);
 				endTime = System.currentTimeMillis();
 				sumQsort += endTime - startTime;
 				startTime = System.currentTimeMillis();
