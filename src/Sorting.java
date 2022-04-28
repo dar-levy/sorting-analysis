@@ -72,9 +72,17 @@ public class Sorting{
 	 * Should run in average complexity of O(n), and worst case complexity of O(n^2)
 	 * 
 	 **/
-	public static double QuickSelect(double[] arr, int i) {
-		// your code comes here
-		return 2.0;
+	public static double QuickSelect(double[] arr, int firstIndex, int lastIndex, int rank) {
+		if (firstIndex == lastIndex) return arr[firstIndex];
+		int pivotIndex = partition(arr, firstIndex, lastIndex);
+		int rankInArrayOfBiggerNumbers = pivotIndex - firstIndex + 1;
+		if (rank == rankInArrayOfBiggerNumbers) return arr[rank];
+		else if (rank < rankInArrayOfBiggerNumbers){
+			return QuickSelect(arr, firstIndex, pivotIndex -1, rank);
+		}
+		else {
+			return QuickSelect(arr, pivotIndex + 1, rank, pivotIndex - rankInArrayOfBiggerNumbers);
+		}
 	}
 	
 	
