@@ -107,16 +107,27 @@ public class Sorting{
 		int secondSubArraySize = lastIndex - medianIndex;
 		double[] firstSubarray = new double[firstSubArraySize];
 		double[] secondSubarray = new double[secondSubArraySize];
-		System.arraycopy(arr, 0, firstSubarray, 0, medianIndex+1);
-		System.arraycopy(arr, medianIndex+1, secondSubarray, 0, lastIndex);
+		System.arraycopy(arr, firstIndex, firstSubarray, 0, firstSubArraySize);
+		System.arraycopy(arr, medianIndex+1, secondSubarray, 0, secondSubArraySize);
 
 		int firstSubarrayIndex = 0;
 		int secondSubarrayIndex = 0;
 		for (int i = firstIndex; i <= lastIndex; i++) {
-			if (secondSubarrayIndex == secondSubArraySize || firstSubarray[firstSubarrayIndex] <= secondSubarray[secondSubarrayIndex]) {
+			if (secondSubarrayIndex == secondSubArraySize && firstSubarrayIndex != firstSubArraySize) {
 				arr[i] = firstSubarray[firstSubarrayIndex];
 				firstSubarrayIndex++;
-			} else {
+			}
+			else if(secondSubarrayIndex != secondSubArraySize && firstSubarrayIndex == firstSubArraySize) {
+				arr[i] = secondSubarray[secondSubarrayIndex];
+				secondSubarrayIndex++;
+			}
+			else if(secondSubarrayIndex == secondSubArraySize && firstSubarrayIndex == firstSubArraySize) {
+				break;
+			}
+			else if (firstSubarray[firstSubarrayIndex] <= secondSubarray[secondSubarrayIndex]) {
+				arr[i] = firstSubarray[firstSubarrayIndex];
+				firstSubarrayIndex++;
+			} else if(firstSubarray[firstSubarrayIndex] > secondSubarray[secondSubarrayIndex]){
 				arr[i] = secondSubarray[secondSubarrayIndex];
 				secondSubarrayIndex++;
 			}
