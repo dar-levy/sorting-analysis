@@ -93,8 +93,34 @@ public class Sorting{
 	 * 
 	 * @param arr - the array to be sorted
 	 */
-	public static void mergeSort(double[] arr){
-			// your code comes here
+	public static void mergeSort(double[] arr, int firstIndex, int lastIndex){
+		if (firstIndex < lastIndex) {
+			int medianIndex = (int)(firstIndex + lastIndex) / 2;
+			mergeSort(arr, firstIndex, medianIndex);
+			mergeSort(arr, medianIndex+1, lastIndex);
+			merge(arr, firstIndex, medianIndex, lastIndex);
+		}
+	}
+
+	private static void merge(double[] arr, int firstIndex, int medianIndex, int lastIndex) {
+		int firstSubArraySize = medianIndex - firstIndex + 1;
+		int secondSubArraySize = lastIndex - medianIndex;
+		double[] firstSubarray = new double[firstSubArraySize];
+		double[] secondSubarray = new double[secondSubArraySize];
+		System.arraycopy(arr, 0, firstSubarray, 0, medianIndex);
+		System.arraycopy(arr, medianIndex+1, secondSubarray, 0, lastIndex);
+
+		int firstSubarrayIndex = 0;
+		int secondSubarrayIndex = 0;
+		for (int i = firstIndex; i < lastIndex; i++) {
+			if (firstSubarray[firstSubarrayIndex] <= secondSubarray[secondSubarrayIndex]) {
+				arr[i] = firstSubarray[firstSubarrayIndex];
+				firstSubarrayIndex++;
+			} else {
+				arr[i] = secondSubarray[secondSubarrayIndex];
+				secondSubarrayIndex++;
+			}
+		}
 	}
 
 	
