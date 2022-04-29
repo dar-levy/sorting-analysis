@@ -107,13 +107,13 @@ public class Sorting{
 		int secondSubArraySize = lastIndex - medianIndex;
 		double[] firstSubarray = new double[firstSubArraySize];
 		double[] secondSubarray = new double[secondSubArraySize];
-		System.arraycopy(arr, 0, firstSubarray, 0, medianIndex);
+		System.arraycopy(arr, 0, firstSubarray, 0, medianIndex+1);
 		System.arraycopy(arr, medianIndex+1, secondSubarray, 0, lastIndex);
 
 		int firstSubarrayIndex = 0;
 		int secondSubarrayIndex = 0;
-		for (int i = firstIndex; i < lastIndex; i++) {
-			if (firstSubarray[firstSubarrayIndex] <= secondSubarray[secondSubarrayIndex]) {
+		for (int i = firstIndex; i <= lastIndex; i++) {
+			if (secondSubarrayIndex == secondSubArraySize || firstSubarray[firstSubarrayIndex] <= secondSubarray[secondSubarrayIndex]) {
 				arr[i] = firstSubarray[firstSubarrayIndex];
 				firstSubarrayIndex++;
 			} else {
@@ -150,7 +150,7 @@ public class Sorting{
     
 	public static void main(String[] args) {
 		double[] arr = {3.0,1.0,4.0,2.0,6.0,7.0,5.0};
-		double ranksValue = QuickSelect(arr, 0, arr.length - 1, 1);
+		mergeSort(arr, 0, arr.length - 1);
 		countingVsQuick();
 		mergeVsQuick();
 		mergeVsQuickOnSortedArray();
@@ -218,7 +218,7 @@ public class Sorting{
 				endTime = System.currentTimeMillis();
 				sumQuick += endTime - startTime;
 				startTime = System.currentTimeMillis();
-				mergeSort(b);
+				mergeSort(b, 0, b.length-1);
 				endTime = System.currentTimeMillis();
 				sumMerge += endTime - startTime;
 			}
@@ -251,7 +251,7 @@ public class Sorting{
 				endTime = System.currentTimeMillis();
 				sumQuick += endTime - startTime;
 				startTime = System.currentTimeMillis();
-				mergeSort(b);
+				mergeSort(b, 0, b.length - 1);
 				endTime = System.currentTimeMillis();
 				sumMerge  += endTime - startTime;
 			}
@@ -280,7 +280,7 @@ public class Sorting{
 					b[j] = a[j];
 				}
 				startTime = System.currentTimeMillis();
-				mergeSort(a);
+				mergeSort(a, 0, a.length);
 				endTime = System.currentTimeMillis();
 				sumMerge += endTime - startTime;
 				startTime = System.currentTimeMillis();
