@@ -85,9 +85,7 @@ public class Sorting{
 		}
 	}
 	
-	
-	
-	
+
 	/**
 	 * Sorts a given array using the merge sort algorithm.
 	 * 
