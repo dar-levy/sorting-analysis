@@ -64,17 +64,25 @@ public class Sorting{
 	}
 
 	/**
-	 * Given an array arr and an index i returns the the i'th order statstics in arr. 
+	 * Given an array arr and an index i returns the the i'th order statstics in arr.
 	 * In other words, it returns the element with rank i in the array arr.
-	 * 
+	 *
 	 * At each stage the pivot is chosen to be the rightmost element of the subarray.
-	 * 
+	 *
 	 * Should run in average complexity of O(n), and worst case complexity of O(n^2)
-	 * 
+	 *
 	 **/
-	public static double QuickSelect(double[] arr, int i) {
-		// your code comes here
-		return 2.0;
+	public static double QuickSelect(double[] arr, int firstIndex, int lastIndex, int rank) {
+		if (firstIndex == lastIndex) return arr[firstIndex];
+		int pivotIndex = partition(arr, firstIndex, lastIndex);
+		int pivotRank = pivotIndex - firstIndex + 1;
+		if (rank == pivotRank) return arr[pivotIndex];
+		else if (rank < pivotRank){
+			return QuickSelect(arr, firstIndex, pivotIndex - 1, rank);
+		}
+		else {
+			return QuickSelect(arr, pivotIndex + 1, lastIndex, rank - pivotRank);
+		}
 	}
 	
 	
@@ -118,7 +126,7 @@ public class Sorting{
     
 	public static void main(String[] args) {
 		double[] arr = {3.0,1.0,4.0,2.0,6.0,7.0,5.0};
-		quickSort(arr, 0 , arr.length-1);
+		double ranksValue = QuickSelect(arr, 0, arr.length - 1, 1);
 		countingVsQuick();
 		mergeVsQuick();
 		mergeVsQuickOnSortedArray();
@@ -290,7 +298,7 @@ public class Sorting{
 				endTime = System.currentTimeMillis();
 				sumQsort += endTime - startTime;
 				startTime = System.currentTimeMillis();
-				QuickSelect(b, r.nextInt(size)+1);
+				QuickSelect(b,0, b.length - 1, r.nextInt(size)+1);
 				endTime = System.currentTimeMillis();
 				sumQselect += endTime - startTime;
 			}
