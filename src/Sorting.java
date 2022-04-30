@@ -168,14 +168,22 @@ public class Sorting{
 	 * @param arr - an array with possitive integers
 	 * @param k - an upper bound for the values of all elements in the array.
 	 */
-	public static void countingSort(int[] arr, int k){
-		// your code comes here
+	public static void countingSort(int[] arr,int[] sortedArr, int k){
+		int[] arrRanks = new int[k];
+		for(int i = 0; i < arr.length; i++){
+			arrRanks[arr[i]-1] += 1;
+		}
+		for(int j = 1; j < arrRanks.length; j++){
+			arrRanks[j] = arrRanks[j] + arrRanks[j-1];
+		}
+		for(int r = arr.length - 1; r >= 0; r--){
+			sortedArr[arrRanks[arr[r]-1]-1] = arr[r];
+			arrRanks[arr[r]-1] -= 1;
+		}
 	}
 
     
 	public static void main(String[] args) {
-		double[] arr = {3.0,1.0,4.0,2.0,6.0,7.0,5.0};
-		bubbleSort(arr);
 		countingVsQuick();
 		mergeVsQuick();
 		mergeVsQuickOnSortedArray();
@@ -206,7 +214,8 @@ public class Sorting{
 				endTime = System.currentTimeMillis();
 				sumQuick += endTime - startTime;
 				startTime = System.currentTimeMillis();
-				countingSort(b, size);
+				int[] sortedB = new int[b.length];
+				countingSort(b, sortedB, size);
 				endTime = System.currentTimeMillis();
 				sumCounting += endTime - startTime;
 			}
