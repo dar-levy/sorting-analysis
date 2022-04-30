@@ -210,7 +210,7 @@ public class Sorting{
 					a[j] = b[j];
 				}
 				startTime = System.currentTimeMillis();
-				quickSort(a, 0, a.length);
+				quickSort(a, 0, a.length-1);
 				endTime = System.currentTimeMillis();
 				sumQuick += endTime - startTime;
 				startTime = System.currentTimeMillis();
@@ -248,7 +248,7 @@ public class Sorting{
 					b[j] = a[j];
 				}
 				startTime = System.currentTimeMillis();
-				quickSort(a,0, a.length);
+				quickSort(a,0, a.length-1);
 				endTime = System.currentTimeMillis();
 				sumQuick += endTime - startTime;
 				startTime = System.currentTimeMillis();
@@ -281,7 +281,7 @@ public class Sorting{
 					b[j] = j;
 				}
 				startTime = System.currentTimeMillis();
-				quickSort(a,0, a.length);
+				quickSort(a,0, a.length-1);
 				endTime = System.currentTimeMillis();
 				sumQuick += endTime - startTime;
 				startTime = System.currentTimeMillis();
@@ -352,7 +352,7 @@ public class Sorting{
 					b[j] = a[j];
 				}
 				startTime = System.currentTimeMillis();
-				quickSort(a,0, a.length);
+				quickSort(a,0, a.length-1);
 				endTime = System.currentTimeMillis();
 				sumQsort += endTime - startTime;
 				startTime = System.currentTimeMillis();
