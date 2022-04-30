@@ -93,8 +93,45 @@ public class Sorting{
 	 * 
 	 * @param arr - the array to be sorted
 	 */
-	public static void mergeSort(double[] arr){
-			// your code comes here
+	public static void mergeSort(double[] arr, int firstIndex, int lastIndex){
+		if (firstIndex < lastIndex) {
+			int medianIndex = (int)(firstIndex + lastIndex) / 2;
+			mergeSort(arr, firstIndex, medianIndex);
+			mergeSort(arr, medianIndex+1, lastIndex);
+			merge(arr, firstIndex, medianIndex, lastIndex);
+		}
+	}
+
+	private static void merge(double[] arr, int firstIndex, int medianIndex, int lastIndex) {
+		int firstSubArraySize = medianIndex - firstIndex + 1;
+		int secondSubArraySize = lastIndex - medianIndex;
+		double[] firstSubarray = new double[firstSubArraySize];
+		double[] secondSubarray = new double[secondSubArraySize];
+		System.arraycopy(arr, firstIndex, firstSubarray, 0, firstSubArraySize);
+		System.arraycopy(arr, medianIndex+1, secondSubarray, 0, secondSubArraySize);
+
+		int firstSubarrayIndex = 0;
+		int secondSubarrayIndex = 0;
+		for (int i = firstIndex; i <= lastIndex; i++) {
+			if (secondSubarrayIndex == secondSubArraySize && firstSubarrayIndex != firstSubArraySize) {
+				arr[i] = firstSubarray[firstSubarrayIndex];
+				firstSubarrayIndex++;
+			}
+			else if(secondSubarrayIndex != secondSubArraySize && firstSubarrayIndex == firstSubArraySize) {
+				arr[i] = secondSubarray[secondSubarrayIndex];
+				secondSubarrayIndex++;
+			}
+			else if(secondSubarrayIndex == secondSubArraySize && firstSubarrayIndex == firstSubArraySize) {
+				break;
+			}
+			else if (firstSubarray[firstSubarrayIndex] <= secondSubarray[secondSubarrayIndex]) {
+				arr[i] = firstSubarray[firstSubarrayIndex];
+				firstSubarrayIndex++;
+			} else if(firstSubarray[firstSubarrayIndex] > secondSubarray[secondSubarrayIndex]){
+				arr[i] = secondSubarray[secondSubarrayIndex];
+				secondSubarrayIndex++;
+			}
+		}
 	}
 
 	
@@ -124,7 +161,7 @@ public class Sorting{
     
 	public static void main(String[] args) {
 		double[] arr = {3.0,1.0,4.0,2.0,6.0,7.0,5.0};
-		double ranksValue = QuickSelect(arr, 0, arr.length - 1, 1);
+		mergeSort(arr, 0, arr.length - 1);
 		countingVsQuick();
 		mergeVsQuick();
 		mergeVsQuickOnSortedArray();
@@ -192,7 +229,7 @@ public class Sorting{
 				endTime = System.currentTimeMillis();
 				sumQuick += endTime - startTime;
 				startTime = System.currentTimeMillis();
-				mergeSort(b);
+				mergeSort(b, 0, b.length-1);
 				endTime = System.currentTimeMillis();
 				sumMerge += endTime - startTime;
 			}
@@ -225,7 +262,7 @@ public class Sorting{
 				endTime = System.currentTimeMillis();
 				sumQuick += endTime - startTime;
 				startTime = System.currentTimeMillis();
-				mergeSort(b);
+				mergeSort(b, 0, b.length - 1);
 				endTime = System.currentTimeMillis();
 				sumMerge  += endTime - startTime;
 			}
@@ -254,7 +291,7 @@ public class Sorting{
 					b[j] = a[j];
 				}
 				startTime = System.currentTimeMillis();
-				mergeSort(a);
+				mergeSort(a, 0, a.length);
 				endTime = System.currentTimeMillis();
 				sumMerge += endTime - startTime;
 				startTime = System.currentTimeMillis();
