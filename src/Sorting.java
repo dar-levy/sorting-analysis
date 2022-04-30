@@ -143,7 +143,21 @@ public class Sorting{
 	 * @param arr - the array to be sorted
 	 */
 	public static void bubbleSort(double[] arr){
-			// your code comes here
+		boolean stop = false;
+		for (int i = 0; i < arr.length - 2; i++){
+			if (stop) return;
+			boolean swap = false;
+			for (int j = 1; j < arr.length - i; j++){
+				if (arr[j-1] > arr[j]) {
+					swap = true;
+					double temp = arr[j-1];
+					arr[j-1] = arr[j];
+					arr[j] = temp;
+				}
+			}
+
+			if (!swap) stop = true;
+		}
 	}
 	/**
 	 * Sorts a given array, using the counting sort algorithm.
@@ -161,7 +175,7 @@ public class Sorting{
     
 	public static void main(String[] args) {
 		double[] arr = {3.0,1.0,4.0,2.0,6.0,7.0,5.0};
-		mergeSort(arr, 0, arr.length - 1);
+		bubbleSort(arr);
 		countingVsQuick();
 		mergeVsQuick();
 		mergeVsQuickOnSortedArray();
