@@ -171,14 +171,14 @@ public class Sorting{
 	public static void countingSort(int[] arr,int[] sortedArr, int k){
 		int[] arrRanks = new int[k];
 		for(int i = 0; i < arr.length; i++){
-			arrRanks[arr[i]-1] += 1;
+			arrRanks[arr[i]] += 1;
 		}
 		for(int j = 1; j < arrRanks.length; j++){
 			arrRanks[j] = arrRanks[j] + arrRanks[j-1];
 		}
 		for(int r = arr.length - 1; r >= 0; r--){
-			sortedArr[arrRanks[arr[r]-1]-1] = arr[r];
-			arrRanks[arr[r]-1] -= 1;
+			sortedArr[arrRanks[arr[r]]-1] = arr[r];
+			arrRanks[arr[r]] -= 1;
 		}
 	}
 
