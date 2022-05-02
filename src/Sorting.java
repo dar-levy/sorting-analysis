@@ -68,7 +68,6 @@ public class Sorting{
 			return QuickSelect(arr, pivotIndex + 1, lastIndex, rank - pivotRank);
 		}
 	}
-	
 
 	/**
 	 * Sorts a given array using the merge sort algorithm.
@@ -176,7 +175,6 @@ public class Sorting{
 		}
 	}
 
-    
 	public static void main(String[] args) {
 		countingVsQuick();
 		mergeVsQuick();
@@ -184,7 +182,6 @@ public class Sorting{
 		mergeVsBubble();
 		QuickSelectVsQuickSort();
 	}
-
 
 	private static void countingVsQuick() {
 		double[] quickTimes = new double[COUNTING_VS_QUICK_LENGTH];
@@ -218,9 +215,6 @@ public class Sorting{
 		Plotter.plot("Counting sort on arrays with elements < n", countingTimes, "Quick sort on arrays with elements < n", quickTimes);
 		
 	}
-
-
-	
 	/**
 	 * Compares the merge sort algorithm against quick sort on random arrays
 	 */
@@ -254,7 +248,6 @@ public class Sorting{
 		}
 		Plotter.plot("quick sort on random array", quickTimes, "merge sort on random array", mergeTimes);
 	}
-	
 	/**
 	 * Compares the merge sort algorithm against quick sort on pre-sorted arrays
 	 */
@@ -320,11 +313,6 @@ public class Sorting{
 		}
 		Plotter.plot("merge sort on random array", mergeTimes, "bubble sort on random array", bubbleTimes);
 	}
-	
-	
-
-
-
 	/**
 	 * Compares the quick select algorithm with a random rank, and the quick sort algorithm.
 	 */
