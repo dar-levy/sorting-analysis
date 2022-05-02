@@ -20,12 +20,10 @@ public class Sorting{
 	 * @param arr - the array to be sorted
 	 */
 	public static void quickSort(double[] arr, int firstIndex, int lastIndex){
-		if (lastIndex-firstIndex >= 2){
+		if (firstIndex < lastIndex){
 			int pivotIndex = partition(arr, firstIndex, lastIndex);
 			quickSort(arr, firstIndex, pivotIndex-1);
 			quickSort(arr, pivotIndex+1, lastIndex);
-		} else {
-			simpleSort(arr, firstIndex, lastIndex);
 		}
 	}
 
@@ -37,30 +35,25 @@ public class Sorting{
 		}
 	}
 
-	private static int partition(double[] arr, int startingIndex, int pivotIndex){
-		double pivotValue = arr[pivotIndex];
-		int left = startingIndex;
-		int right = pivotIndex-1;
-		while(true){
-			while (arr[right] >= pivotValue && right > left) {
-				right -= 1;
-			}
+	private static int partition(double[] arr, int begin, int end) {
+		double pivot = arr[end];
+		int i = (begin-1);
 
-			while (arr[left] < pivotValue && left < right) {
-				left += 1;
-			}
+		for (int j = begin; j < end; j++) {
+			if (arr[j] <= pivot) {
+				i++;
 
-			if(left < right){
-				double leftValue = arr[left];
-				arr[left] = arr[right];
-				arr[right] = leftValue;
-			} else {
-				double lastRightIndexValue = arr[right + 1];
-				arr[pivotIndex] = lastRightIndexValue;
-				arr[right + 1] = pivotValue;
-				return (right + 1);
+				double swapTemp = arr[i];
+				arr[i] = arr[j];
+				arr[j] = swapTemp;
 			}
 		}
+
+		double swapTemp = arr[i+1];
+		arr[i+1] = arr[end];
+		arr[end] = swapTemp;
+
+		return i+1;
 	}
 
 	/**
@@ -190,7 +183,6 @@ public class Sorting{
 		mergeVsBubble();
 		QuickSelectVsQuickSort();
 	}
-	
 
 
 	private static void countingVsQuick() {
