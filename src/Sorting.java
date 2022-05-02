@@ -78,15 +78,15 @@ public class Sorting{
 	 * @param arr - the array to be sorted
 	 */
 	public static void mergeSort(double[] arr, int firstIndex, int lastIndex){
-		if (arr.length > 1 && firstIndex < lastIndex) {
-			int medianIndex = (firstIndex + lastIndex) / 2;
+		if (firstIndex < lastIndex) {
+			int medianIndex = firstIndex + (lastIndex - firstIndex) / 2;
 			mergeSort(arr, firstIndex, medianIndex);
 			mergeSort(arr, medianIndex+1, lastIndex);
 			merge(arr, firstIndex, medianIndex, lastIndex);
 		}
 	}
 
-	private static void merge(double[] arr, int firstIndex, int medianIndex, int lastIndex) {
+	private static void merge1(double[] arr, int firstIndex, int medianIndex, int lastIndex) {
 		int firstSubarraySize = medianIndex - firstIndex + 1;
 		int secondSubarraySize = lastIndex - medianIndex;
 		double[] firstSubarray = new double[firstSubarraySize];
@@ -118,7 +118,58 @@ public class Sorting{
 		}
 	}
 
+	private static void merge(double[] arr, int firstIndex, int q, int r) {
 	
+		// Create L ← A[firstIndex..q] and M ← A[q+1..r]
+		int n1 = q - firstIndex + 1;
+		int n2 = r - q;
+
+		double[] L = new double[n1];
+		double[] M = new double[n2];
+
+		for (int i = 0; i < n1; i++)
+			L[i] = arr[firstIndex + i];
+		for (int j = 0; j < n2; j++)
+			if (q+1+j >= arr.length) return;
+			else {
+				M[j] = arr[q + 1 + j];
+			}
+
+		// Maintain current index of sub-arrays and main array
+		int i, j, k;
+		i = 0;
+		j = 0;
+		k = firstIndex;
+
+		// Until we reach either end of either L or M, pick larger among
+		// elements L and M and place them in the correct position at A[firstIndex..r]
+		while (i < n1 && j < n2) {
+			if (L[i] <= M[j]) {
+				arr[k] = L[i];
+				i++;
+			} else {
+				arr[k] = M[j];
+				j++;
+			}
+			k++;
+		}
+
+		// When we run out of elements in either L or M,
+		// pick up the remaining elements and put in A[firstIndex..r]
+		while (i < n1) {
+			arr[k] = L[i];
+			i++;
+			k++;
+		}
+
+		while (j < n2) {
+			arr[k] = M[j];
+			j++;
+			k++;
+		}
+	}
+
+
 	/**
 	 * Sorts a given array using bubble sort.
 	 * 
