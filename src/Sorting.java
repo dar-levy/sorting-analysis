@@ -35,25 +35,24 @@ public class Sorting{
 		}
 	}
 
-	private static int partition(double[] arr, int begin, int end) {
-		double pivot = arr[end];
-		int i = (begin-1);
-
-		for (int j = begin; j < end; j++) {
+	private static int partition(double[] arr, int firstIndex, int lastIndex) {
+		double pivot = arr[lastIndex];
+		int i = (firstIndex-1);
+		for (int j = firstIndex; j < lastIndex; j++) {
 			if (arr[j] <= pivot) {
 				i++;
-
-				double swapTemp = arr[i];
-				arr[i] = arr[j];
-				arr[j] = swapTemp;
+				swap(arr, i, j);
 			}
 		}
 
-		double swapTemp = arr[i+1];
-		arr[i+1] = arr[end];
-		arr[end] = swapTemp;
-
+		swap(arr, i+1, lastIndex);
 		return i+1;
+	}
+
+	private static void swap(double[] arr, int leftIndex, int rightIndex){
+		double temporaryValue = arr[leftIndex];
+		arr[leftIndex] = arr[rightIndex];
+		arr[rightIndex] = temporaryValue;
 	}
 
 	/**
