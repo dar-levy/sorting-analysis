@@ -119,7 +119,6 @@ public class Sorting{
 	}
 
 	private static void merge(double[] arr, int firstIndex, int medianIndex, int lastIndex) {
-		// Create leftSubarray ← A[firstIndex..medianIndex] and rightSubarray ← A[medianIndex+1..lastIndex]
 		int leftSubarraySize = medianIndex - firstIndex + 1;
 		int rightSubarraySize = lastIndex - medianIndex;
 		double[] leftSubarray = new double[leftSubarraySize];
@@ -128,46 +127,46 @@ public class Sorting{
 		for (int i = 0; i < leftSubarraySize; i++) {
 			leftSubarray[i] = arr[firstIndex + i];
 		}
+
 		for (int j = 0; j < rightSubarraySize; j++) {
-			if (medianIndex + 1 + j >= arr.length) return;
+			if (medianIndex + 1 + j >= arr.length)  return;
 			else {
 				rightSubarray[j] = arr[medianIndex + 1 + j];
 			}
 		}
 
 		// Maintain current index of sub-arrays and main array
-		int i = 0;
-		int j = 0;
-		int k = firstIndex;
+		int IndexOfLeftSubarray = 0;
+		int IndexOfRightSubarray = 0;
+		int IndexOfMergedArray = firstIndex;
 
 		// Until we reach either end of either leftSubarray or rightSubarray, pick larger among
 		// elements leftSubarray and rightSubarray and place them in the correct position at A[firstIndex..lastIndex]
-		while (i < leftSubarraySize && j < rightSubarraySize) {
-			if (leftSubarray[i] <= rightSubarray[j]) {
-				arr[k] = leftSubarray[i];
-				i++;
+		while (IndexOfLeftSubarray < leftSubarraySize && IndexOfRightSubarray < rightSubarraySize) {
+			if (leftSubarray[IndexOfLeftSubarray] <= rightSubarray[IndexOfRightSubarray]) {
+				arr[IndexOfMergedArray] = leftSubarray[IndexOfLeftSubarray];
+				IndexOfLeftSubarray++;
 			} else {
-				arr[k] = rightSubarray[j];
-				j++;
+				arr[IndexOfMergedArray] = rightSubarray[IndexOfRightSubarray];
+				IndexOfRightSubarray++;
 			}
-			k++;
+			IndexOfMergedArray++;
 		}
 
 		// When we run out of elements in either leftSubarray or rightSubarray,
 		// pick up the remaining elements and put in A[firstIndex..lastIndex]
-		while (i < leftSubarraySize) {
-			arr[k] = leftSubarray[i];
-			i++;
-			k++;
+		while (IndexOfLeftSubarray < leftSubarraySize) {
+			arr[IndexOfMergedArray] = leftSubarray[IndexOfLeftSubarray];
+			IndexOfLeftSubarray++;
+			IndexOfMergedArray++;
 		}
 
-		while (j < rightSubarraySize) {
-			arr[k] = rightSubarray[j];
-			j++;
-			k++;
+		while (IndexOfRightSubarray < rightSubarraySize) {
+			arr[IndexOfMergedArray] = rightSubarray[IndexOfRightSubarray];
+			IndexOfRightSubarray++;
+			IndexOfMergedArray++;
 		}
 	}
-
 
 	/**
 	 * Sorts a given array using bubble sort.
@@ -218,6 +217,8 @@ public class Sorting{
 
     
 	public static void main(String[] args) {
+		double[] numbers = new double[]{1.0,0.0,2.0,5.0};
+		mergeSort(numbers, 0, numbers.length-1);
 		countingVsQuick();
 		mergeVsQuick();
 		mergeVsQuickOnSortedArray();
