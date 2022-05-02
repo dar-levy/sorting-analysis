@@ -27,14 +27,6 @@ public class Sorting{
 		}
 	}
 
-	private static void simpleSort(double[] arr, int firstIndex, int lastIndex){
-		if (arr[firstIndex] > arr[lastIndex]){
-			double firstValue = arr[firstIndex];
-			arr[firstIndex] = arr[lastIndex];
-			arr[lastIndex] = firstValue;
-		}
-	}
-
 	private static int partition(double[] arr, int firstIndex, int lastIndex) {
 		double pivot = arr[lastIndex];
 		int i = (firstIndex-1);
