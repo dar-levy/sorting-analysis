@@ -86,48 +86,13 @@ public class Sorting{
 		}
 	}
 
-	private static void merge1(double[] arr, int firstIndex, int medianIndex, int lastIndex) {
-		int firstSubarraySize = medianIndex - firstIndex + 1;
-		int secondSubarraySize = lastIndex - medianIndex;
-		double[] firstSubarray = new double[firstSubarraySize];
-		double[] secondSubarray = new double[secondSubarraySize];
-		System.arraycopy(arr, firstIndex, firstSubarray, 0, firstSubarraySize);
-		System.arraycopy(arr, medianIndex+1, secondSubarray, 0, secondSubarraySize);
-
-		int firstSubarrayIndex = 0;
-		int secondSubarrayIndex = 0;
-		for (int i = firstIndex; i <= lastIndex; i++) {
-			if (secondSubarrayIndex == secondSubarraySize && firstSubarrayIndex != firstSubarraySize) {
-				arr[i] = firstSubarray[firstSubarrayIndex];
-				firstSubarrayIndex++;
-			}
-			else if(secondSubarrayIndex != secondSubarraySize && firstSubarrayIndex == firstSubarraySize) {
-				arr[i] = secondSubarray[secondSubarrayIndex];
-				secondSubarrayIndex++;
-			}
-			else if(secondSubarrayIndex == secondSubarraySize && firstSubarrayIndex == firstSubarraySize) {
-				break;
-			}
-			else if (firstSubarray[firstSubarrayIndex] <= secondSubarray[secondSubarrayIndex]) {
-				arr[i] = firstSubarray[firstSubarrayIndex];
-				firstSubarrayIndex++;
-			} else if(firstSubarray[firstSubarrayIndex] > secondSubarray[secondSubarrayIndex]){
-				arr[i] = secondSubarray[secondSubarrayIndex];
-				secondSubarrayIndex++;
-			}
-		}
-	}
-
 	private static void merge(double[] arr, int firstIndex, int medianIndex, int lastIndex) {
 		int leftSubarraySize = medianIndex - firstIndex + 1;
 		int rightSubarraySize = lastIndex - medianIndex;
 		double[] leftSubarray = new double[leftSubarraySize];
 		double[] rightSubarray = new double[rightSubarraySize];
 
-		for (int i = 0; i < leftSubarraySize; i++) {
-			leftSubarray[i] = arr[firstIndex + i];
-		}
-
+		System.arraycopy(arr, firstIndex, leftSubarray, 0, leftSubarraySize);
 		for (int j = 0; j < rightSubarraySize; j++) {
 			if (medianIndex + 1 + j >= arr.length)  return;
 			else {
@@ -135,14 +100,14 @@ public class Sorting{
 			}
 		}
 
-		// Maintain current index of sub-arrays and main array
+		addElementsBySize(arr, leftSubarray, rightSubarray, rightSubarraySize, leftSubarraySize, firstIndex);
+	}
+
+	private static void addElementsBySize(double[] arr, double[] leftSubarray, double[] rightSubarray,int rightSubarraySize, int leftSubarraySize, int firstIndex) {
 		int IndexOfLeftSubarray = 0;
 		int IndexOfRightSubarray = 0;
 		int IndexOfMergedArray = firstIndex;
-
-		// Until we reach either end of either leftSubarray or rightSubarray, pick larger among
-		// elements leftSubarray and rightSubarray and place them in the correct position at A[firstIndex..lastIndex]
-		while (IndexOfLeftSubarray < leftSubarraySize && IndexOfRightSubarray < rightSubarraySize) {
+		while ((IndexOfLeftSubarray < leftSubarraySize) && (IndexOfRightSubarray < rightSubarraySize)) {
 			if (leftSubarray[IndexOfLeftSubarray] <= rightSubarray[IndexOfRightSubarray]) {
 				arr[IndexOfMergedArray] = leftSubarray[IndexOfLeftSubarray];
 				IndexOfLeftSubarray++;
@@ -152,19 +117,15 @@ public class Sorting{
 			}
 			IndexOfMergedArray++;
 		}
+		addRestSubarrayElements(arr, leftSubarray, leftSubarraySize, IndexOfMergedArray, IndexOfLeftSubarray);
+		addRestSubarrayElements(arr, rightSubarray, rightSubarraySize, IndexOfMergedArray, IndexOfRightSubarray);
+	}
 
-		// When we run out of elements in either leftSubarray or rightSubarray,
-		// pick up the remaining elements and put in A[firstIndex..lastIndex]
-		while (IndexOfLeftSubarray < leftSubarraySize) {
-			arr[IndexOfMergedArray] = leftSubarray[IndexOfLeftSubarray];
-			IndexOfLeftSubarray++;
-			IndexOfMergedArray++;
-		}
-
-		while (IndexOfRightSubarray < rightSubarraySize) {
-			arr[IndexOfMergedArray] = rightSubarray[IndexOfRightSubarray];
-			IndexOfRightSubarray++;
-			IndexOfMergedArray++;
+	private static void addRestSubarrayElements(double[] arr, double[] subarray, int subarraySize, int indexOfArray, int indexOfSubarray){
+		while (indexOfSubarray < subarraySize) {
+			arr[indexOfArray] = subarray[indexOfSubarray];
+			indexOfSubarray++;
+			indexOfArray++;
 		}
 	}
 
