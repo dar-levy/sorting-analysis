@@ -42,11 +42,11 @@ public class Sorting{
 		int left = startingIndex;
 		int right = pivotIndex-1;
 		while(true){
-			while (right > 0 && !(arr[right] < pivotValue) && right >= left) {
+			while (arr[right] >= pivotValue && right > left) {
 				right -= 1;
 			}
 
-			while (!(arr[left] >= pivotValue) && left <= pivotIndex) {
+			while (arr[left] < pivotValue && left < right) {
 				left += 1;
 			}
 
