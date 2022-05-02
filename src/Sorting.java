@@ -41,10 +41,10 @@ public class Sorting{
 		return i+1;
 	}
 
-	private static void swap(double[] arr, int leftIndex, int rightIndex){
-		double temporaryValue = arr[leftIndex];
-		arr[leftIndex] = arr[rightIndex];
-		arr[rightIndex] = temporaryValue;
+	private static void swap(double[] arr, int firstIndex, int lastIndex){
+		double temporaryValue = arr[firstIndex];
+		arr[firstIndex] = arr[lastIndex];
+		arr[lastIndex] = temporaryValue;
 	}
 
 	/**
@@ -103,21 +103,21 @@ public class Sorting{
 	}
 
 	private static void addElementsBySize(double[] arr, double[] leftSubarray, double[] rightSubarray,int rightSubarraySize, int leftSubarraySize, int firstIndex) {
-		int IndexOfLeftSubarray = 0;
-		int IndexOfRightSubarray = 0;
-		int IndexOfMergedArray = firstIndex;
-		while ((IndexOfLeftSubarray < leftSubarraySize) && (IndexOfRightSubarray < rightSubarraySize)) {
-			if (leftSubarray[IndexOfLeftSubarray] <= rightSubarray[IndexOfRightSubarray]) {
-				arr[IndexOfMergedArray] = leftSubarray[IndexOfLeftSubarray];
-				IndexOfLeftSubarray++;
+		int indexOfLeftSubarray = 0;
+		int indexOfRightSubarray = 0;
+		int indexOfMergedArray = firstIndex;
+		while ((indexOfLeftSubarray < leftSubarraySize) && (indexOfRightSubarray < rightSubarraySize)) {
+			if (leftSubarray[indexOfLeftSubarray] <= rightSubarray[indexOfRightSubarray]) {
+				arr[indexOfMergedArray] = leftSubarray[indexOfLeftSubarray];
+				indexOfLeftSubarray++;
 			} else {
-				arr[IndexOfMergedArray] = rightSubarray[IndexOfRightSubarray];
-				IndexOfRightSubarray++;
+				arr[indexOfMergedArray] = rightSubarray[indexOfRightSubarray];
+				indexOfRightSubarray++;
 			}
-			IndexOfMergedArray++;
+			indexOfMergedArray++;
 		}
-		addRestSubarrayElements(arr, leftSubarray, leftSubarraySize, IndexOfMergedArray, IndexOfLeftSubarray);
-		addRestSubarrayElements(arr, rightSubarray, rightSubarraySize, IndexOfMergedArray, IndexOfRightSubarray);
+		addRestSubarrayElements(arr, leftSubarray, leftSubarraySize, indexOfMergedArray, indexOfLeftSubarray);
+		addRestSubarrayElements(arr, rightSubarray, rightSubarraySize, indexOfMergedArray, indexOfRightSubarray);
 	}
 
 	private static void addRestSubarrayElements(double[] arr, double[] subarray, int subarraySize, int indexOfArray, int indexOfSubarray){
