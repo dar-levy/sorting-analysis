@@ -78,8 +78,8 @@ public class Sorting{
 	 * @param arr - the array to be sorted
 	 */
 	public static void mergeSort(double[] arr, int firstIndex, int lastIndex){
-		if (firstIndex < lastIndex) {
-			int medianIndex = (int)(firstIndex + lastIndex) / 2;
+		if (arr.length > 1 && firstIndex < lastIndex) {
+			int medianIndex = (firstIndex + lastIndex) / 2;
 			mergeSort(arr, firstIndex, medianIndex);
 			mergeSort(arr, medianIndex+1, lastIndex);
 			merge(arr, firstIndex, medianIndex, lastIndex);
@@ -87,25 +87,25 @@ public class Sorting{
 	}
 
 	private static void merge(double[] arr, int firstIndex, int medianIndex, int lastIndex) {
-		int firstSubArraySize = medianIndex - firstIndex + 1;
-		int secondSubArraySize = lastIndex - medianIndex;
-		double[] firstSubarray = new double[firstSubArraySize];
-		double[] secondSubarray = new double[secondSubArraySize];
-		System.arraycopy(arr, firstIndex, firstSubarray, 0, firstSubArraySize);
-		System.arraycopy(arr, medianIndex+1, secondSubarray, 0, secondSubArraySize);
+		int firstSubarraySize = medianIndex - firstIndex + 1;
+		int secondSubarraySize = lastIndex - medianIndex;
+		double[] firstSubarray = new double[firstSubarraySize];
+		double[] secondSubarray = new double[secondSubarraySize];
+		System.arraycopy(arr, firstIndex, firstSubarray, 0, firstSubarraySize);
+		System.arraycopy(arr, medianIndex+1, secondSubarray, 0, secondSubarraySize);
 
 		int firstSubarrayIndex = 0;
 		int secondSubarrayIndex = 0;
 		for (int i = firstIndex; i <= lastIndex; i++) {
-			if (secondSubarrayIndex == secondSubArraySize && firstSubarrayIndex != firstSubArraySize) {
+			if (secondSubarrayIndex == secondSubarraySize && firstSubarrayIndex != firstSubarraySize) {
 				arr[i] = firstSubarray[firstSubarrayIndex];
 				firstSubarrayIndex++;
 			}
-			else if(secondSubarrayIndex != secondSubArraySize && firstSubarrayIndex == firstSubArraySize) {
+			else if(secondSubarrayIndex != secondSubarraySize && firstSubarrayIndex == firstSubarraySize) {
 				arr[i] = secondSubarray[secondSubarrayIndex];
 				secondSubarrayIndex++;
 			}
-			else if(secondSubarrayIndex == secondSubArraySize && firstSubarrayIndex == firstSubArraySize) {
+			else if(secondSubarrayIndex == secondSubarraySize && firstSubarrayIndex == firstSubarraySize) {
 				break;
 			}
 			else if (firstSubarray[firstSubarrayIndex] <= secondSubarray[secondSubarrayIndex]) {
