@@ -178,8 +178,6 @@ public class Sorting{
 
     
 	public static void main(String[] args) {
-		double[] numbers = new double[]{1.0,0.0,2.0,5.0};
-		mergeSort(numbers, 0, numbers.length-1);
 		countingVsQuick();
 		mergeVsQuick();
 		mergeVsQuickOnSortedArray();
